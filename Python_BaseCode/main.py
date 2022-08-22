@@ -1,5 +1,5 @@
 import pandas as pd
-import data as pdr
+from pandas_datareader import data as pdr
 import FinanceDataReader as fdr
 import yfinance
 from tqdm import tqdm
