@@ -1,4 +1,4 @@
-package com.mapo.tradingbot
+package com.exception.tradingbot
 
 import org.junit.Test
 
