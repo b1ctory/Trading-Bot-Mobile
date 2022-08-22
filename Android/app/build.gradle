@@ -1,19 +1,39 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.chaquo.python'
 }
 
 android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.mapo.tradingbot"
+        applicationId 'com.exception.tradingbot'
         minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        python {
+            python {
+                buildPython "/usr/local/bin/python3"
+                pip {
+                    install "numpy"
+                    install "pandas"
+                    install "pandas_datareader"
+                    install "finance-datareader"
+                    install "tqdm"
+                    install "TA-Lib"
+                    install "bs4"
+                    install "yfinance"
+                    install "simplejson"
+                }
+            }
+        }
+
+        ndk {
+            abiFilters "arm64-v8a"
+        }
     }
 
     buildTypes {
@@ -22,6 +42,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            python.srcDirs = ["src/main/python"]
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
