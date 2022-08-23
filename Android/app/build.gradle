@@ -29,6 +29,11 @@ android {
                     install "simplejson"
                 }
             }
+            sourceSets {
+                main {
+                    python.srcDirs = ["src/main/python"]
+                }
+            }
         }
 
         ndk {
@@ -43,11 +48,6 @@ android {
         }
     }
 
-    sourceSets {
-        main {
-            python.srcDirs = ["src/main/python"]
-        }
-    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
