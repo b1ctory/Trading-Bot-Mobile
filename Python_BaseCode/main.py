@@ -6,10 +6,14 @@ from tqdm import tqdm
 import time
 import warnings
 import talib
+from os.path import dirname, join
 warnings.filterwarnings("ignore")
 
-etf_tickers = pd.read_csv("ETFs.csv")
-stock_tickers = fdr.StockListing("NASDAQ")
+etf_file = join(dirname(__file__), "ETFs.csv")
+etf_tickers = pd.read_csv(etf_file)
+# stock_tickers = pd.read_csv("stock_tickers.csv")
+stock_file = join(dirname(__file__), "stock_tickers.csv")
+stock_tickers = pd.read_csv(stock_file)
 
 def get_position(df):
     close = df["Adj Close"]
@@ -145,12 +149,13 @@ def simulation(ticker, df):
 
 #etf
 print("------------ETF-----------")
+print(etf_tickers)
 for ticker in tqdm(etf_tickers["Symbol"]):
     try:
         df = pdr.get_data_yahoo(ticker)
         df = get_position(df)
         simulation(ticker, df)
-
+        
     except Exception as e:
         print("except")
         print(e)
