@@ -1,5 +1,9 @@
 # Trading-Bot-Mobile
 
+#### Python 주가 예측 코드
+
+**this_integer님 :** [GitHub - iinteger/Trading-Bot: 가상화폐, 주식 봇 개발기](https://github.com/iinteger/Trading-Bot)
+
 #### Python 코드를 안드로이드에 적용하기
 
 - **build.gradle (Project) 에 아래의 항목 추가**
@@ -100,7 +104,31 @@
 
 - 이외에도 파이썬 코드를 .kt 파일 내에서 작성해서 .py 에 매개변수로 넘겨주는 방법 등도 지원함.
 
+#### Python method
 
+```python
+# ETF 종목 모두 탐색하여 매수 종목 추출
+def buyETF():
+
+
+# 매수하고싶은 ETF 종목 한가지만 검색
+def buyOneETF(ticker):
+
+
+# 주식 종목 (나스닥 TOP 100) 모두 탐색하여 매수 종목 추출
+def buyStock():
+    
+
+# 매수하고싶은 주식 종목 한가지만 검색 
+def buyOneStock(ticker):
+
+
+# tickers = ["ADBE", "XLV", "QCOM", "MDLZ", "IAU"]
+# 매도하고 싶은 종목 Array 를 넣으면 매도 지수 도출
+def sell(tickers):
+
+
+```
 
 
 
