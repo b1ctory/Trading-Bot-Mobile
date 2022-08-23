@@ -3,6 +3,8 @@ package com.exception.tradingbot
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import com.chaquo.python.PyException
 import com.chaquo.python.PyObject
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
@@ -15,14 +17,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (!Python.isStarted()) {
-            Python.start(AndroidPlatform(this))
+        try {
+            if (!Python.isStarted()) {
+                Python.start(AndroidPlatform(this))
+            }
+
+            var py: Python = Python.getInstance()
+            var pyObject: PyObject = py.getModule("main")
+            pyObject.callAttr("run")
+        } catch(e: PyException) {
+            Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+            Log.e("Python", e.message.toString())
         }
 
-        var py: Python = Python.getInstance()
-        var pyObject: PyObject = py.getModule("main")
-        var obj: PyObject = pyObject.callAttrThrows("run")
 
-        Log.e("OBJ", "$obj")
+
     }
 }
