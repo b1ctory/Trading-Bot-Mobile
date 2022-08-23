@@ -7,12 +7,16 @@ import time
 import warnings
 import talib
 from os.path import dirname, join
+import time
+
+
 warnings.filterwarnings("ignore")
 
-etf_tickers = join(dirname(__file__), "etf.txt")
+etf_file = join(dirname(__file__), "ETFs.csv")
+etf_tickers = pd.read_csv(etf_file)
+stock_file = join(dirname(__file__), "stock_tickers.csv")
+stock_tickers = pd.read_csv(stock_file)
 
-# stock_tickers = pd.read_csv("stock_tickers.csv")
-stock_tickers = join(dirname(__file__), "src/main/python/stock_tickers.csv")
 def get_position(df):
     close = df["Adj Close"]
 
@@ -115,7 +119,10 @@ def simulation(ticker, df):
             if holding:
                 sell_price = row["Adj Close"]
                 holding = False
-                df.loc[index, "trade"] = "SELL"
+                if sell_price > buy_price:
+                    df.loc[index, "trade"] = "SELL"
+                else:
+                    df.loc[index, "trade"] = "STOP"
                 seed = seed * (sell_price/buy_price) * (1-fee)
 
         # 5%이상 손실날 때 손절
@@ -152,12 +159,12 @@ def run():
     print(etf_tickers)
     print("stock_tickers")
     print(stock_tickers)
-    for ticker in tqdm(etf_tickers):
+    for ticker in tqdm(etf_tickers["Symbol"]):
         try:
             df = pdr.get_data_yahoo(ticker)
             df = get_position(df)
             simulation(ticker, df)
-
+            time.sleep(1)
         except Exception as e:
             print("except")
             print(e)
@@ -170,6 +177,7 @@ def run():
             df = pdr.get_data_yahoo(ticker)
             df = get_position(df)
             simulation(ticker, df)
+            time.sleep(1)
 
         except Exception as e:
             print("except")
