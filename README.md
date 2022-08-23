@@ -6,7 +6,7 @@
 
 #### Python 코드를 안드로이드에 적용하기
 
-- **build.gradle (Project) 에 아래의 항목 추가**
+- **build.gradle (Project) 에 아래의 항목 추가**
   
   ```groovy
   buildscript {
@@ -70,7 +70,7 @@
 
 - **app/src/main/ 경로에 python directory 생성 후, 필요한 .py 파일과 .csv 파일을 넣어준다.**
 
-        ![Directory](https://github.com/b1ctory/Trading-Bot-Mobile/blob/master/file_directory.png)
+        ![](/Users/cheonsuebin/Library/Application%20Support/marktext/images/2022-08-23-11-31-54-image.png)
 
 - **main.py 파일에서 csv 파일을 정상적으로 불러오게 하기 위해 아래처럼 바꾸어 준다.**
   
