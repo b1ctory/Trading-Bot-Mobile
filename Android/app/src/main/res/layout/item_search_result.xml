@@ -1,0 +1,113 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="10dp"
+    android:background="@drawable/button_round"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/textview_ticker_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="종목"
+        android:textStyle="bold"
+        android:layout_marginStart="20dp"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textview_ticker_name_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="종목 검색 결과"
+        android:layout_marginStart="20dp"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toRightOf="@+id/textview_ticker_name"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textview_buyscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buy Score : 10"
+        android:layout_marginEnd="4dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textview_win_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Win Rate : 10"
+        android:layout_marginEnd="4dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textview_buyscore"
+        android:layout_marginTop="4dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textview_strategy_return"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="전략 수익률"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/textview_ticker_name"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textview_strategy_return_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="전략 수익률 결과"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        app:layout_constraintRight_toRightOf="@id/textview_buy_and_hold_income_result"
+        app:layout_constraintLeft_toRightOf="@id/textview_strategy_return"
+        app:layout_constraintTop_toBottomOf="@id/textview_ticker_name_result"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textview_buy_and_hold_income"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="바이앤홀드 수익률"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/textview_strategy_return"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textview_buy_and_hold_income_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="바이앤홀드 수익률 결과"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toRightOf="@id/textview_buy_and_hold_income"
+        app:layout_constraintTop_toBottomOf="@id/textview_strategy_return_result"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
