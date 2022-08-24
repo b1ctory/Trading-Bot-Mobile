@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="select_buy_or_sell">
+        <item> BUY </item>
+        <item> SELL </item>
+    </string-array>
+</resources>
