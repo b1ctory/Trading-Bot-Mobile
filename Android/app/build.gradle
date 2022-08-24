@@ -1,7 +1,12 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
     id 'com.chaquo.python'
+}
+
+androidExtensions {
+    experimental = true
 }
 
 android {
