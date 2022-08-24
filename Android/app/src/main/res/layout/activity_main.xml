@@ -1,18 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".MainActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_trading_bot_title"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Trading Bot"
+            android:textColor="@color/chery_blue"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_trading_bot_title"
+            android:layout_marginTop="45dp">
+
+            <LinearLayout
+                android:id="@+id/layout_main_button_linear"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_etf"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/chery_blue"
+                        android:gravity="center"
+                        android:text="ETF"
+                        android:textColor="@color/white"
+                        android:textSize="50sp" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_stock"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/chery_blue"
+                        android:gravity="center"
+                        android:text="Stock"
+                        android:textColor="@color/white"
+                        android:textSize="50sp" />
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_buy_one"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@id/layout_main_button_linear"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/chery_blue"
+                    android:gravity="center"
+                    android:text="Buy One ETF / Stock"
+                    android:textColor="@color/white"
+                    android:textSize="35sp" />
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</layout>
