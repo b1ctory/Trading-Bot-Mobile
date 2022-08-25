@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TradingBot</string>
+    <string name="buy_score" > Buy Score : %1$s</string>
+    <string name="win_score" > Win Score : %1$s%%</string>
+    <string name="strategy_income" > %1$s%%</string>
+    <string name="buy_and_hold_income" > %1$s%%</string>
+
 </resources>
