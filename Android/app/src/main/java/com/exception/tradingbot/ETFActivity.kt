@@ -1,55 +1,127 @@
 package com.exception.tradingbot
 
+import android.icu.util.LocaleData
+import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chaquo.python.PyException
 import com.chaquo.python.PyObject
 import com.chaquo.python.Python
 import com.exception.tradingbot.databinding.ActivityEtfBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.time.LocalDate
+import kotlin.math.roundToInt
 
 class ETFActivity: AppCompatActivity() {
 
     private lateinit var etfBinding: ActivityEtfBinding
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         etfBinding = DataBindingUtil.setContentView(this, R.layout.activity_etf)
 
+        etfBinding.indicatorETF.visibility = View.INVISIBLE
+        etfBinding.buttonEtfSearch.isClickable = true
+
+
+        val adapter = ETFAdapter()
+        etfBinding.recyclerviewEtf.adapter = adapter
+        etfBinding.recyclerviewEtf.layoutManager = LinearLayoutManager(this)
+        etfBinding.recyclerviewEtf.addItemDecoration(ETFItemDecoration())
+
+        if (SharedPreferenceManager.getYesterDayETF(this).isNotEmpty()) {
+            adapter.resultDataList = SharedPreferenceManager.getYesterDayETF(this)
+        }
+
         etfBinding.buttonEtfSearch.setOnClickListener {
-            searchETF()
+
+            GlobalScope.launch(Dispatchers.Main) {
+                etfBinding.indicatorETF.visibility = View.VISIBLE
+                etfBinding.buttonEtfSearch.isClickable = false
+
+                if (LocalDate.now().toString() == SharedPreferenceManager.getDate(applicationContext)) {
+                    // TODO: Alert for 재검색
+                    if (SharedPreferenceManager.getYesterDayETF(applicationContext).isEmpty()) {
+                        Log.e("Empty", "Empty")
+                        val etfList = searchETF()
+                        adapter.resultDataList = etfList
+                    } else {
+                        Log.e("Not Empty", "Not Empty")
+                    }
+                } else {
+                    SharedPreferenceManager.setDate(applicationContext, LocalDate.now().toString())
+                    if (SharedPreferenceManager.getYesterDayETF(applicationContext).isEmpty()) {
+                        Log.e("Empty", "Empty")
+                        val etfList = searchETF()
+                        adapter.resultDataList = etfList
+                    } else {
+                        Log.e("Not Empty", "Not Empty")
+                    }
+                }
+
+                delay(1000)
+
+                etfBinding.buttonEtfSearch.isClickable = true
+                etfBinding.indicatorETF.visibility = View.INVISIBLE
+
+            }
+
+
+
+
         }
 
     }
 
-    private fun searchETF() {
+    private fun searchETF(): MutableList<ETF> {
         Log.e("Search ETF", "Start")
-        /*
-        1. recyclerview 사용해서 종목 / buy score / 전략 수익률 / 바이앤홀드 수익률 / 승률 출력
-        2. Thread 사용해서 별도 스레드에서 돌아가면서 indicator view 구현
-        */
+
+        var etfList: MutableList<ETF> = mutableListOf()
         try {
 
             val py: Python = Python.getInstance()
             val main: PyObject = py.getModule("trading_bot")
 
             // # tickers = ["ADBE", "XLV", "QCOM", "MDLZ", "IAU"]
-            var buyETF = main.callAttr("buyETF")
-            var buyETFToArray = buyETF.toJava(MutableList::class.java)
-            Log.e("Buy ETF", buyETFToArray[0].toString())
+            val buyETF = main.callAttr("buyETF")
+            val buyETFArray = buyETF.asList()
 
-            for (value in buyETFToArray) {
-                Log.e("Buy ETF", value.toString())
+            for (value in buyETFArray) {
+                val dic = value.toString().split(",")
+
+                val ticker = dic[0].split(":")[1].trim().replace("'", "")
+                val buyScore = dic[1].split(":")[1].trim().toInt()
+                val strategyIncome = dic[2].split(":")[1].trim().toFloat().roundToInt()
+                val buyAndHoldIncome = dic[3].split(":")[1].trim().toFloat().roundToInt()
+                val winScore = dic[4].split(":")[1].trim().replace("}", "").substring(0, 3).toFloat().times(100).toInt()
+
+                // TODO : SharedPreferences에 저장해서 전날 기록 볼 수 있도록
+
+
+                val etf = ETF(ticker, strategyIncome, buyAndHoldIncome,  buyScore, winScore)
+                etfList.add(etf)
+
             }
-
         } catch(e: PyException) {
             Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
             Log.e("Python", e.message.toString())
         }
+
+        SharedPreferenceManager.setYesterDayETF(this, etfList)
+
+        return etfList
     }
 
 }
