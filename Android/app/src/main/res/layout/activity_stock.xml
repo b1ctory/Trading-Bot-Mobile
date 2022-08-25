@@ -11,6 +11,28 @@
         android:background="@color/white"
         tools:context=".StockActivity">
 
+        <FrameLayout
+            android:elevation="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#70000000"
+            android:id="@+id/indicator_stock">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#70000000"/>
+
+            <ProgressBar
+                android:id="@+id/progress_bar_stock"
+                android:indeterminateDrawable="@drawable/style_progressbar"
+                android:indeterminateTint="@color/chery_blue"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:elevation="30dp" />
+        </FrameLayout>
+
         <TextView
             android:id="@+id/tv_stock_title"
             android:layout_width="match_parent"
@@ -22,6 +44,28 @@
             android:textColor="@color/chery_blue"
             android:textSize="50sp"
             android:textStyle="bold" />
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintTop_toBottomOf="@+id/tv_stock_title"
+            app:layout_constraintBottom_toTopOf="@+id/button_stock_search">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_stock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:flow_verticalAlign="top"
+                app:layout_constrainedHeight="true"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                android:layout_gravity="top"
+                android:layout_margin="16dp" />
+
+        </FrameLayout>
 
         <Button
             android:layout_alignParentBottom="true"
@@ -36,19 +80,6 @@
             android:layout_marginBottom="20dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/recyclerview_stock"
-            android:layout_below="@+id/tv_stock_title"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_stock_title"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_alignBottom="@id/button_stock_search"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
