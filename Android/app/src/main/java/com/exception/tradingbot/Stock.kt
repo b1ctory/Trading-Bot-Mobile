@@ -6,8 +6,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Stock (
     var ticker: String,
+    var strategyIncome: Int,
+    var buyAndHoldIncome: Int,
     var buyScore: Int,
-    var strategyIncome: Double,
-    var buyAndHoldIncome: Double,
-    var winScore: Double
+    var winScore: Int
 ): Parcelable
