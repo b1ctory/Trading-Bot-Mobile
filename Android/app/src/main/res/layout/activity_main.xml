@@ -91,9 +91,10 @@
                 app:cardElevation="10dp">
 
                 <TextView
+                    android:clickable="false"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/chery_blue"
+                    android:background="@color/light_grey"
                     android:gravity="center"
                     android:text="Buy One ETF / Stock"
                     android:textColor="@color/white"
