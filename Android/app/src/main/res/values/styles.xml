@@ -1,0 +1,10 @@
+<resources>
+
+    <style name="DialogTheme.Search" parent="@style/Base.Theme.AppCompat.Light.Dialog.MinWidth">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowBackground">@drawable/style_dialog</item>
+    </style>
+
+
+</resources>
