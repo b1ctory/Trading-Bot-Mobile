@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -13,23 +14,18 @@ import com.chaquo.python.PyException
 import com.chaquo.python.PyObject
 import com.chaquo.python.Python
 import com.exception.tradingbot.databinding.ActivityStockBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.lang.Math.round
+import kotlinx.coroutines.*
 import java.time.LocalDate
 import kotlin.math.roundToInt
 
 class StockActivity: AppCompatActivity() {
     private lateinit var stockBinding: ActivityStockBinding
+    private val searchViewModel: SearchViewModel by viewModels()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         stockBinding = DataBindingUtil.setContentView(this, R.layout.activity_stock)
-
-        Log.e("Shared", SharedPreferenceManager.getYesterDayStock(this).toString())
 
         stockBinding.indicatorStock.visibility = View.INVISIBLE
         stockBinding.buttonStockSearch.isClickable = true
@@ -44,52 +40,70 @@ class StockActivity: AppCompatActivity() {
         }
 
         stockBinding.buttonStockSearch.setOnClickListener {
-
-            Log.e("NOW", LocalDate.now().toString())
+            searchViewModel.setStockProgressBarStart(true)
+            Log.e("현재 날짜", LocalDate.now().toString())
 
             GlobalScope.launch(Dispatchers.Main) {
+
                 stockBinding.indicatorStock.visibility = View.VISIBLE
                 stockBinding.buttonStockSearch.isClickable = false
-
-                if (LocalDate.now().toString() == SharedPreferenceManager.getDate(applicationContext)) {
-                    // TODO: Alert for 재검색
-                    if (SharedPreferenceManager.getYesterDayStock(applicationContext).isEmpty()) {
-                        Log.e("Empty", "Empty")
-                        val stockList = searchStock()
-                        adapter.resultDataList = stockList
-                    } else {
-                        Log.e("Not Empty", "Not Empty")
-                    }
+                // 앱에 최초 진입한 경우
+                if (SharedPreferenceManager.getYesterDayStock(applicationContext).isEmpty()) {
+                    Log.e("GetYesterDayStock", "Empty")
+                    SharedPreferenceManager.setStockDate(applicationContext, LocalDate.now().toString())
+                    val stockList = searchStock()
+                    stockBinding.recyclerviewStock.adapter = adapter
+                    stockBinding.recyclerviewStock.layoutManager = LinearLayoutManager(applicationContext)
+                    stockBinding.recyclerviewStock.addItemDecoration(StockItemDecoration())
+                    adapter.resultDataList = stockList
                 } else {
-                    SharedPreferenceManager.setDate(applicationContext, LocalDate.now().toString())
-                    if (SharedPreferenceManager.getYesterDayStock(applicationContext).isEmpty()) {
-                        Log.e("Empty", "Empty")
-                        val stockList = searchStock()
-                        adapter.resultDataList = stockList
+                    // 현재 날짜와 저장된 날짜가 같으면 팝업 로드
+                    Log.e("Now", LocalDate.now().toString())
+                    Log.e("Saved", SharedPreferenceManager.getStockDate(applicationContext))
+                    if (LocalDate.now().toString() == SharedPreferenceManager.getStockDate(applicationContext)) {
+                        val dialog = SearchDialogFragment(searchViewModel, isStock = true)
+                        dialog.show(supportFragmentManager, dialog.tag)
+
+                        // viewmodel observing해서 stockList search
+                        if (searchViewModel.isStockSearchAgain.value == true) {
+                            searchViewModel.setStockProgressBarStart(true)
+                            val stockList = searchStock()
+                            stockBinding.recyclerviewStock.adapter = adapter
+                            stockBinding.recyclerviewStock.layoutManager = LinearLayoutManager(applicationContext)
+                            stockBinding.recyclerviewStock.addItemDecoration(StockItemDecoration())
+                            adapter.resultDataList = stockList
+                        }
                     } else {
-                        Log.e("Not Empty", "Not Empty")
+                        SharedPreferenceManager.setStockDate(applicationContext, LocalDate.now().toString())
+                        val stockList = searchStock()
+                        stockBinding.recyclerviewStock.adapter = adapter
+                        stockBinding.recyclerviewStock.layoutManager = LinearLayoutManager(applicationContext)
+                        stockBinding.recyclerviewStock.addItemDecoration(StockItemDecoration())
+                        adapter.resultDataList = stockList
                     }
+
                 }
-
-                delay(1000)
-
-                stockBinding.buttonStockSearch.isClickable = true
-                stockBinding.indicatorStock.visibility = View.INVISIBLE
-
+                searchViewModel.setStockProgressBarStart(false)
             }
-
         }
-
+        searchViewModel.isStockProgressBarStart.observeForever {
+            if (it) {
+                stockBinding.indicatorStock.visibility = View.VISIBLE
+                stockBinding.stockTouchArea.isClickable = false
+                stockBinding.buttonStockSearch.isClickable = false
+            } else {
+                stockBinding.indicatorStock.visibility = View.INVISIBLE
+                stockBinding.stockTouchArea.isClickable = true
+                stockBinding.buttonStockSearch.isClickable = true
+            }
+        }
     }
 
 
 
     private fun searchStock(): MutableList<Stock> {
         Log.e("Search Stock", "Start")
-        /*
-        1. recyclerview 사용해서 종목 / buy score / 전략 수익률 / 바이앤홀드 수익률 / 승률 출력
-        2. Thread 사용해서 별도 스레드에서 돌아가면서 indicator view 구현
-        */
+
         var stockList: MutableList<Stock> = mutableListOf()
         try {
 
@@ -108,9 +122,6 @@ class StockActivity: AppCompatActivity() {
                 val strategyIncome = dic[2].split(":")[1].trim().toFloat().roundToInt()
                 val buyAndHoldIncome = dic[3].split(":")[1].trim().toFloat().roundToInt()
                 val winScore = dic[4].split(":")[1].trim().replace("}", "").substring(0, 3).toFloat().times(100).toInt()
-
-                // TODO : SharedPreferences에 저장해서 전날 기록 볼 수 있도록
-
 
                 val stock = Stock(ticker, strategyIncome, buyAndHoldIncome,  buyScore, winScore)
                 stockList.add(stock)
