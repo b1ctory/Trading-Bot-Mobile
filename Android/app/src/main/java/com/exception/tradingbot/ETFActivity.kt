@@ -1,13 +1,11 @@
 package com.exception.tradingbot
 
-import android.icu.util.LocaleData
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -18,13 +16,13 @@ import com.chaquo.python.Python
 import com.exception.tradingbot.databinding.ActivityEtfBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import kotlin.math.roundToInt
 
 class ETFActivity: AppCompatActivity() {
 
+    private val searchViewModel: SearchViewModel by viewModels()
     private lateinit var etfBinding: ActivityEtfBinding
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -46,43 +44,55 @@ class ETFActivity: AppCompatActivity() {
         }
 
         etfBinding.buttonEtfSearch.setOnClickListener {
-
+            searchViewModel.setETFProgressBarStart(true)
             GlobalScope.launch(Dispatchers.Main) {
                 etfBinding.indicatorETF.visibility = View.VISIBLE
                 etfBinding.buttonEtfSearch.isClickable = false
 
-                if (LocalDate.now().toString() == SharedPreferenceManager.getDate(applicationContext)) {
-                    // TODO: Alert for 재검색
-                    if (SharedPreferenceManager.getYesterDayETF(applicationContext).isEmpty()) {
-                        Log.e("Empty", "Empty")
-                        val etfList = searchETF()
-                        adapter.resultDataList = etfList
-                    } else {
-                        Log.e("Not Empty", "Not Empty")
-                    }
+                if (SharedPreferenceManager.getYesterDayETF(applicationContext).isEmpty()) {
+                    Log.e("GetYesterDayETF", "Empty")
+                    SharedPreferenceManager.setETFDate(applicationContext, LocalDate.now().toString())
+                    val etfList = searchETF()
+                    etfBinding.recyclerviewEtf.adapter = adapter
+                    etfBinding.recyclerviewEtf.layoutManager = LinearLayoutManager(applicationContext)
+                    etfBinding.recyclerviewEtf.addItemDecoration(ETFItemDecoration())
+                    adapter.resultDataList = etfList
                 } else {
-                    SharedPreferenceManager.setDate(applicationContext, LocalDate.now().toString())
-                    if (SharedPreferenceManager.getYesterDayETF(applicationContext).isEmpty()) {
-                        Log.e("Empty", "Empty")
-                        val etfList = searchETF()
-                        adapter.resultDataList = etfList
+                    if (LocalDate.now().toString() == SharedPreferenceManager.getETFDate(applicationContext)) {
+                        val dialog = SearchDialogFragment(searchViewModel, isStock = false)
+                        dialog.show(supportFragmentManager, dialog.tag)
+
+                        if (searchViewModel.isETFSearchAgain.value == true) {
+                            searchViewModel.setETFProgressBarStart(true)
+                            val etfList = searchETF()
+                            etfBinding.recyclerviewEtf.adapter = adapter
+                            etfBinding.recyclerviewEtf.layoutManager = LinearLayoutManager(applicationContext)
+                            etfBinding.recyclerviewEtf.addItemDecoration(ETFItemDecoration())
+                            adapter.resultDataList = etfList
+                        }
                     } else {
-                        Log.e("Not Empty", "Not Empty")
+                        SharedPreferenceManager.setETFDate(applicationContext, LocalDate.now().toString())
+                        val etfList = searchETF()
+                        etfBinding.recyclerviewEtf.adapter = adapter
+                        etfBinding.recyclerviewEtf.layoutManager = LinearLayoutManager(applicationContext)
+                        etfBinding.recyclerviewEtf.addItemDecoration(ETFItemDecoration())
+                        adapter.resultDataList = etfList
                     }
                 }
-
-                delay(1000)
-
-                etfBinding.buttonEtfSearch.isClickable = true
-                etfBinding.indicatorETF.visibility = View.INVISIBLE
-
+                searchViewModel.setETFProgressBarStart(false)
             }
-
-
-
-
         }
-
+        searchViewModel.isETFProgressBarStart.observeForever {
+            if (it) {
+                etfBinding.indicatorETF.visibility = View.VISIBLE
+                etfBinding.etfTouchArea.isClickable = false
+                etfBinding.buttonEtfSearch.isClickable = false
+            } else {
+                etfBinding.indicatorETF.visibility = View.INVISIBLE
+                etfBinding.etfTouchArea.isClickable = true
+                etfBinding.buttonEtfSearch.isClickable = true
+            }
+        }
     }
 
     private fun searchETF(): MutableList<ETF> {
