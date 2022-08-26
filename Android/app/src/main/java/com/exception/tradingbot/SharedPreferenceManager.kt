@@ -61,15 +61,27 @@ public object SharedPreferenceManager {
         return list
     }
 
-    fun setDate(context: Context, input: String) {
-        val prefs : SharedPreferences = context.getSharedPreferences("date", Context.MODE_PRIVATE)
+    fun setStockDate(context: Context, input: String) {
+        val prefs : SharedPreferences = context.getSharedPreferences("stock_date", Context.MODE_PRIVATE)
         val editor : SharedPreferences.Editor = prefs.edit()
-        editor.putString("SEARCH_DATE", input)
+        editor.putString("SEARCH_STOCK_DATE", input)
         editor.commit()
     }
 
-    fun getDate(context: Context): String {
-        val prefs : SharedPreferences = context.getSharedPreferences("date", Context.MODE_PRIVATE)
-        return prefs.getString("SEARCH_DATE", "").toString()
+    fun getStockDate(context: Context): String {
+        val prefs : SharedPreferences = context.getSharedPreferences("stock_date", Context.MODE_PRIVATE)
+        return prefs.getString("SEARCH_STOCK_DATE", "").toString()
+    }
+
+    fun setETFDate(context: Context, input: String) {
+        val prefs : SharedPreferences = context.getSharedPreferences("etf_date", Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = prefs.edit()
+        editor.putString("SEARCH_ETF_DATE", input)
+        editor.commit()
+    }
+
+    fun getETFDate(context: Context): String {
+        val prefs : SharedPreferences = context.getSharedPreferences("etf_date", Context.MODE_PRIVATE)
+        return prefs.getString("SEARCH_ETF_DATE", "").toString()
     }
 }
