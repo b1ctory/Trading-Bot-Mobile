@@ -28,14 +28,14 @@
       ...
       id 'com.chaquo.python'
   }
-  
-  
+  ```
+
   android {
       ...
-  
+
       defaultConfig {
           ...
-  
+    
           python {
               python {
                   buildPython "/usr/local/bin/python3"
@@ -57,29 +57,30 @@
                   }
               }
           }
-  
+    
           // 필요에 따라 추가 가능
           ndk {
               abiFilters "arm64-v8a"
           }
-  
+    
           ...
       }
-  }
-  ```
 
+  }
+
+```
 - **app/src/main/ 경로에 python directory 생성 후, 필요한 .py 파일과 .csv 파일을 넣어준다.**
 
-        ![](/Users/cheonsuebin/Library/Application%20Support/marktext/images/2022-08-23-11-31-54-image.png)
+      ![](/Users/cheonsuebin/Library/Application%20Support/marktext/images/2022-08-23-11-31-54-image.png)
 
 - **main.py 파일에서 csv 파일을 정상적으로 불러오게 하기 위해 아래처럼 바꾸어 준다.**
-  
-  ```python
-  etf_file = join(dirname(__file__), "ETFs.csv")
-  etf_tickers = pd.read_csv(etf_file)
-  stock_file = join(dirname(__file__), "stock_tickers.csv")
-  stock_tickers = pd.read_csv(stock_file)
-  ```
+
+```python
+etf_file = join(dirname(__file__), "ETFs.csv")
+etf_tickers = pd.read_csv(etf_file)
+stock_file = join(dirname(__file__), "stock_tickers.csv")
+stock_tickers = pd.read_csv(stock_file)
+```
 
 - **현재는 우선 run() 에서 주식, ETF를 모두 처리하지만, 해당 부분을 메소드 분리하여 처리할 예정**
 
@@ -98,10 +99,9 @@
               Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
               Log.e("Python", e.message.toString())
           }
-  
-  
   ```
 
+```
 - 이외에도 파이썬 코드를 .kt 파일 내에서 작성해서 .py 에 매개변수로 넘겨주는 방법 등도 지원함.
 
 #### Python method
@@ -117,7 +117,7 @@ def buyOneETF(ticker):
 
 # 주식 종목 (나스닥 TOP 100) 모두 탐색하여 매수 종목 추출
 def buyStock():
-    
+
 
 # 매수하고싶은 주식 종목 한가지만 검색 
 def buyOneStock(ticker):
@@ -126,9 +126,17 @@ def buyOneStock(ticker):
 # tickers = ["ADBE", "XLV", "QCOM", "MDLZ", "IAU"]
 # 매도하고 싶은 종목 Array 를 넣으면 매도 지수 도출
 def sell(tickers):
-
-
 ```
+
+- **[2022.08.28] 수정 필요한 내역**
+  
+  - 실행 시간 단축 (현재 약 5분 정도 소요되는데, 순수 파이썬 코드에 적용할 때보다 약 4배 이상 더 소요되는 것으로 추정)
+  
+  - progressbar 이 멈춰있는 현상
+  
+  - 단일 종목 검색
+  
+  - class로 수정된 Python 파일 새로 import 필요
 
 
 
