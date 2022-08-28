@@ -117,9 +117,6 @@ class ETFActivity: AppCompatActivity() {
                 val buyAndHoldIncome = dic[3].split(":")[1].trim().toFloat().roundToInt()
                 val winScore = dic[4].split(":")[1].trim().replace("}", "").substring(0, 3).toFloat().times(100).toInt()
 
-                // TODO : SharedPreferences에 저장해서 전날 기록 볼 수 있도록
-
-
                 val etf = ETF(ticker, strategyIncome, buyAndHoldIncome,  buyScore, winScore)
                 etfList.add(etf)
 

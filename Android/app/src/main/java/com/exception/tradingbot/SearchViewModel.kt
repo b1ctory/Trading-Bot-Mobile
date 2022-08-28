@@ -17,11 +17,11 @@ class SearchViewModel(): ViewModel() {
 
     val isETFProgressBarStart = MutableLiveData<Boolean>()
     fun setETFProgressBarStart(value: Boolean) {
-        isStockProgressBarStart.postValue(value)
+        isETFProgressBarStart.postValue(value)
     }
 
     val isETFSearchAgain = MutableLiveData<Boolean>()
     fun setETFSearchAgain(value: Boolean) {
-        isStockSearchAgain.postValue(value)
+        isETFProgressBarStart.postValue(value)
     }
 }
