@@ -58,20 +58,20 @@ class StockActivity: AppCompatActivity() {
                     adapter.resultDataList = stockList
                 } else {
                     // 현재 날짜와 저장된 날짜가 같으면 팝업 로드
-                    Log.e("Now", LocalDate.now().toString())
-                    Log.e("Saved", SharedPreferenceManager.getStockDate(applicationContext))
                     if (LocalDate.now().toString() == SharedPreferenceManager.getStockDate(applicationContext)) {
                         val dialog = SearchDialogFragment(searchViewModel, isStock = true)
                         dialog.show(supportFragmentManager, dialog.tag)
 
                         // viewmodel observing해서 stockList search
-                        if (searchViewModel.isStockSearchAgain.value == true) {
-                            searchViewModel.setStockProgressBarStart(true)
-                            val stockList = searchStock()
-                            stockBinding.recyclerviewStock.adapter = adapter
-                            stockBinding.recyclerviewStock.layoutManager = LinearLayoutManager(applicationContext)
-                            stockBinding.recyclerviewStock.addItemDecoration(StockItemDecoration())
-                            adapter.resultDataList = stockList
+                        searchViewModel.isStockSearchAgain.observeForever {
+                            if (it) {
+                                searchViewModel.setStockProgressBarStart(true)
+                                val stockList = searchStock()
+                                stockBinding.recyclerviewStock.adapter = adapter
+                                stockBinding.recyclerviewStock.layoutManager = LinearLayoutManager(applicationContext)
+                                stockBinding.recyclerviewStock.addItemDecoration(StockItemDecoration())
+                                adapter.resultDataList = stockList
+                            }
                         }
                     } else {
                         SharedPreferenceManager.setStockDate(applicationContext, LocalDate.now().toString())
@@ -103,7 +103,7 @@ class StockActivity: AppCompatActivity() {
 
     private fun searchStock(): MutableList<Stock> {
         Log.e("Search Stock", "Start")
-
+        val start = System.currentTimeMillis()
         var stockList: MutableList<Stock> = mutableListOf()
         try {
 
@@ -114,18 +114,18 @@ class StockActivity: AppCompatActivity() {
             val buyStock = main.callAttr("buyStock")
             val buyStockArray = buyStock.asList()
 
-            for (value in buyStockArray) {
-                val dic = value.toString().split(",")
+            val end = System.currentTimeMillis()
+            Log.e("소요시간 : ", "${(end - start) / 1000}")
+            for (stock in buyStockArray) {
+                val stockArr = stock.toString().split(" ")
 
-                val ticker = dic[0].split(":")[1].trim().replace("'", "")
-                val buyScore = dic[1].split(":")[1].trim().toInt()
-                val strategyIncome = dic[2].split(":")[1].trim().toFloat().roundToInt()
-                val buyAndHoldIncome = dic[3].split(":")[1].trim().toFloat().roundToInt()
-                val winScore = dic[4].split(":")[1].trim().replace("}", "").substring(0, 3).toFloat().times(100).toInt()
+                val ticker = stockArr[0].trim()
+                val buyScore = stockArr[1].trim().toInt()
+                val strategyIncome = stockArr[2].trim().toFloat().roundToInt()
+                val buyAndHoldIncome = stockArr[3].trim().toFloat().roundToInt()
+                val winScore = stockArr[4].trim().substring(0, 3).toFloat().times(100).toInt()
 
-                val stock = Stock(ticker, strategyIncome, buyAndHoldIncome,  buyScore, winScore)
-                stockList.add(stock)
-
+                stockList.add( Stock(ticker, strategyIncome, buyAndHoldIncome,  buyScore, winScore))
             }
         } catch(e: PyException) {
             Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
@@ -133,7 +133,6 @@ class StockActivity: AppCompatActivity() {
         }
 
         SharedPreferenceManager.setYesterDayStock(this, stockList)
-
         return stockList
     }
 }
