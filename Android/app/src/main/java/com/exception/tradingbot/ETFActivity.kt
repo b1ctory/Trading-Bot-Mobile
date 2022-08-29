@@ -62,14 +62,18 @@ class ETFActivity: AppCompatActivity() {
                         val dialog = SearchDialogFragment(searchViewModel, isStock = false)
                         dialog.show(supportFragmentManager, dialog.tag)
 
-                        if (searchViewModel.isETFSearchAgain.value == true) {
-                            searchViewModel.setETFProgressBarStart(true)
-                            val etfList = searchETF()
-                            etfBinding.recyclerviewEtf.adapter = adapter
-                            etfBinding.recyclerviewEtf.layoutManager = LinearLayoutManager(applicationContext)
-                            etfBinding.recyclerviewEtf.addItemDecoration(ETFItemDecoration())
-                            adapter.resultDataList = etfList
+                        searchViewModel.isETFSearchAgain.observeForever {
+                            if (it == true) {
+                                searchViewModel.setETFProgressBarStart(true)
+                                val etfList = searchETF()
+                                etfBinding.recyclerviewEtf.adapter = adapter
+                                etfBinding.recyclerviewEtf.layoutManager = LinearLayoutManager(applicationContext)
+                                etfBinding.recyclerviewEtf.addItemDecoration(ETFItemDecoration())
+                                adapter.resultDataList = etfList
+                            }
                         }
+
+
                     } else {
                         SharedPreferenceManager.setETFDate(applicationContext, LocalDate.now().toString())
                         val etfList = searchETF()
@@ -108,17 +112,16 @@ class ETFActivity: AppCompatActivity() {
             val buyETF = main.callAttr("buyETF")
             val buyETFArray = buyETF.asList()
 
-            for (value in buyETFArray) {
-                val dic = value.toString().split(",")
+            for (etf in buyETFArray) {
+                val etfArr = etf.toString().split(" ")
 
-                val ticker = dic[0].split(":")[1].trim().replace("'", "")
-                val buyScore = dic[1].split(":")[1].trim().toInt()
-                val strategyIncome = dic[2].split(":")[1].trim().toFloat().roundToInt()
-                val buyAndHoldIncome = dic[3].split(":")[1].trim().toFloat().roundToInt()
-                val winScore = dic[4].split(":")[1].trim().replace("}", "").substring(0, 3).toFloat().times(100).toInt()
+                val ticker = etfArr[0].trim()
+                val buyScore = etfArr[1].trim().toInt()
+                val strategyIncome = etfArr[2].trim().toFloat().roundToInt()
+                val buyAndHoldIncome = etfArr[3].trim().toFloat().roundToInt()
+                val winScore = etfArr[4].trim().substring(0, 3).toFloat().times(100).toInt()
 
-                val etf = ETF(ticker, strategyIncome, buyAndHoldIncome,  buyScore, winScore)
-                etfList.add(etf)
+                etfList.add(ETF(ticker, strategyIncome, buyAndHoldIncome,  buyScore, winScore))
 
             }
         } catch(e: PyException) {
