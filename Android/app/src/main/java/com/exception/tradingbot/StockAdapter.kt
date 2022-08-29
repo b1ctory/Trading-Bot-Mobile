@@ -1,7 +1,5 @@
 package com.exception.tradingbot
 
-import android.content.res.Resources
-import android.provider.Settings.Secure.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,11 +32,11 @@ class StockAdapter: RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
         var buyAndHoldReturnValue: TextView = itemView.findViewById<TextView>(R.id.textview_buy_and_hold_income_result)
 
         fun setDataText(stockData: Stock) {
-            tickerName.text = stockData.ticker
-            buyScore.text = itemView.resources.getString(R.string.buy_score, stockData.buyScore.toString())
-            winScore.text = itemView.resources.getString(R.string.win_score, stockData.winScore.toString())
-            strategyReturnValue.text = itemView.resources.getString(R.string.strategy_income, stockData.strategyIncome.toString())
-            buyAndHoldReturnValue.text =  itemView.resources.getString(R.string.buy_and_hold_income, stockData.buyAndHoldIncome.toString())
+            tickerName.text = stockData.name
+            buyScore.text = itemView.resources.getString(R.string.buy_score, stockData.buy_score.toString())
+            winScore.text = itemView.resources.getString(R.string.win_score, stockData.win_rate.toString())
+            strategyReturnValue.text = itemView.resources.getString(R.string.strategy_income, stockData.strategy_yield.toString())
+            buyAndHoldReturnValue.text =  itemView.resources.getString(R.string.buy_and_hold_income, stockData.buy_and_hold_yield.toString())
         }
     }
 }

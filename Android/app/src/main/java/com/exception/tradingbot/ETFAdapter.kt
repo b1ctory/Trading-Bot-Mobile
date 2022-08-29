@@ -33,11 +33,11 @@ class ETFAdapter: RecyclerView.Adapter<ETFAdapter.ETFViewHolder>() {
         var buyAndHoldReturnValue: TextView = itemView.findViewById<TextView>(R.id.textview_buy_and_hold_income_result)
 
         fun setDataText(etfData: ETF) {
-            tickerName.text = etfData.ticker
-            buyScore.text = itemView.resources.getString(R.string.buy_score, etfData.buyScore.toString())
-            winScore.text = itemView.resources.getString(R.string.win_score, etfData.winScore.toString())
-            strategyReturnValue.text = itemView.resources.getString(R.string.strategy_income, etfData.strategyIncome.toString())
-            buyAndHoldReturnValue.text =  itemView.resources.getString(R.string.buy_and_hold_income, etfData.buyAndHoldIncome.toString())
+            tickerName.text = etfData.name
+            buyScore.text = itemView.resources.getString(R.string.buy_score, etfData.buy_score.toString())
+            winScore.text = itemView.resources.getString(R.string.win_score, etfData.win_rate.toString())
+            strategyReturnValue.text = itemView.resources.getString(R.string.strategy_income, etfData.strategy_yield.toString())
+            buyAndHoldReturnValue.text =  itemView.resources.getString(R.string.buy_and_hold_income, etfData.buy_and_hold_yield.toString())
         }
     }
 }
