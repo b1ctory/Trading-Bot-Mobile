@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import TradingBotSDK
 
 class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(TradingBotSDKVersionNumber)
+        
     }
     
 }
