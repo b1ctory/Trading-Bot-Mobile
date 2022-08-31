@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1031AD1628BDDA0400AD0F08 /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1031AD1528BDDA0400AD0F08 /* PythonKit */; };
-		1031AD1B28BDE98A00AD0F08 /* trading_bot.py in Resources */ = {isa = PBXBuildFile; fileRef = 1031AD1828BDE98900AD0F08 /* trading_bot.py */; };
-		1031AD1C28BDE98A00AD0F08 /* stock_tickers.csv in Resources */ = {isa = PBXBuildFile; fileRef = 1031AD1928BDE98900AD0F08 /* stock_tickers.csv */; };
-		1031AD1D28BDE98A00AD0F08 /* ETFs.csv in Resources */ = {isa = PBXBuildFile; fileRef = 1031AD1A28BDE98900AD0F08 /* ETFs.csv */; };
 		45F5420728B11E910020223C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5420628B11E910020223C /* AppDelegate.swift */; };
 		45F5420928B11E910020223C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5420828B11E910020223C /* SceneDelegate.swift */; };
 		45F5420B28B11E910020223C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5420A28B11E910020223C /* HomeViewController.swift */; };
@@ -39,9 +36,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1031AD1828BDE98900AD0F08 /* trading_bot.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = trading_bot.py; sourceTree = "<group>"; };
-		1031AD1928BDE98900AD0F08 /* stock_tickers.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stock_tickers.csv; sourceTree = "<group>"; };
-		1031AD1A28BDE98900AD0F08 /* ETFs.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ETFs.csv; sourceTree = "<group>"; };
 		45F5420328B11E910020223C /* TradingBot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradingBot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45F5420628B11E910020223C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45F5420828B11E910020223C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,16 +76,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1031AD1728BDE95800AD0F08 /* Python */ = {
-			isa = PBXGroup;
-			children = (
-				1031AD1A28BDE98900AD0F08 /* ETFs.csv */,
-				1031AD1928BDE98900AD0F08 /* stock_tickers.csv */,
-				1031AD1828BDE98900AD0F08 /* trading_bot.py */,
-			);
-			path = Python;
-			sourceTree = "<group>";
-		};
 		45F541FA28B11E900020223C = {
 			isa = PBXGroup;
 			children = (
@@ -115,7 +99,6 @@
 		45F5420528B11E910020223C /* TradingBot */ = {
 			isa = PBXGroup;
 			children = (
-				1031AD1728BDE95800AD0F08 /* Python */,
 				45F5420628B11E910020223C /* AppDelegate.swift */,
 				45F5420828B11E910020223C /* SceneDelegate.swift */,
 				45F5420A28B11E910020223C /* HomeViewController.swift */,
@@ -255,9 +238,6 @@
 			files = (
 				45F5421328B11E930020223C /* LaunchScreen.storyboard in Resources */,
 				45F5421028B11E930020223C /* Assets.xcassets in Resources */,
-				1031AD1B28BDE98A00AD0F08 /* trading_bot.py in Resources */,
-				1031AD1D28BDE98A00AD0F08 /* ETFs.csv in Resources */,
-				1031AD1C28BDE98A00AD0F08 /* stock_tickers.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
