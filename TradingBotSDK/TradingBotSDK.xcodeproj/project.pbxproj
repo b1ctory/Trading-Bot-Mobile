@@ -11,6 +11,7 @@
 		10CD88E328BEFE4700102817 /* TradingBotSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CD88E228BEFE4700102817 /* TradingBotSDKTests.swift */; };
 		10CD88E428BEFE4700102817 /* TradingBotSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 10CD88D628BEFE4700102817 /* TradingBotSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		10CD88F128BF00FE00102817 /* TradingBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CD88F028BF00FE00102817 /* TradingBot.swift */; };
+		10CD893E28C5AB1500102817 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 10CD893D28C5AB1500102817 /* data */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +31,7 @@
 		10CD88E228BEFE4700102817 /* TradingBotSDKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingBotSDKTests.swift; sourceTree = "<group>"; };
 		10CD88ED28BEFE7B00102817 /* TradingBotSDK.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TradingBotSDK.md; sourceTree = "<group>"; };
 		10CD88F028BF00FE00102817 /* TradingBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingBot.swift; sourceTree = "<group>"; };
+		10CD893D28C5AB1500102817 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 		10CD88D528BEFE4700102817 /* TradingBotSDK */ = {
 			isa = PBXGroup;
 			children = (
+				10CD893D28C5AB1500102817 /* data */,
 				10CD88ED28BEFE7B00102817 /* TradingBotSDK.md */,
 				10CD88D628BEFE4700102817 /* TradingBotSDK.h */,
 				10CD88F028BF00FE00102817 /* TradingBot.swift */,
@@ -180,6 +183,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10CD893E28C5AB1500102817 /* data in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
