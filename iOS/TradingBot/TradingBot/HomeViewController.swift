@@ -6,22 +6,27 @@
 //
 
 import UIKit
-import TradingBotSDK
 import SnapKit
 import PythonKit
 
 class HomeViewController: UIViewController {
-    var stockTickers: [String] = [String]()
+    
+    var stockTickers: [String]? = []
+    var etfTickers: [String]? = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(TradingBotSDKVersionNumber)
         
-        print(getStockTickers())
+        stockTickers = getStockTickers()
+        etfTickers = getETFTickers()
+        
+        print(stockTickers!)
+        print(etfTickers!)
     }
     
     func getStockTickers() -> [String]? {
         do {
+            var tickers: [String] = [String]()
             let path = Bundle.main.path(forResource: "stock_tickers", ofType: "csv")!
             let data = try Data(contentsOf: URL(fileURLWithPath: path))
             let dataEncoded = String(data: data, encoding: .utf8)
@@ -31,12 +36,34 @@ class HomeViewController: UIViewController {
                 $0.components(separatedBy: ",")
             }) {
                 for i in 0..<(parsedCSV.count - 1) {
-                    stockTickers.append(parsedCSV[i][1])
+                    tickers.append(parsedCSV[i][1])
                 }
-                stockTickers.remove(at: 0)
-                return stockTickers
+                tickers.remove(at: 0)
             }
-            return stockTickers ?? nil
+            return tickers
+        } catch {
+            print(error.localizedDescription)
+            return []
+        }
+    }
+    
+    func getETFTickers() -> [String]? {
+        do {
+            var tickers: [String] = [String]()
+            let path = Bundle.main.path(forResource: "ETFs", ofType: "csv")!
+            let data = try Data(contentsOf: URL(fileURLWithPath: path))
+            let dataEncoded = String(data: data, encoding: .utf8)
+            
+            if let parsedCSV = dataEncoded?.components(separatedBy: "\n").map({
+                $0.components(separatedBy: ",")
+            }) {
+                for i in 0..<(parsedCSV.count - 1) {
+                    tickers.append(parsedCSV[i][0].replacingOccurrences(of: "\"", with: ""))
+                }
+                tickers.remove(at: 0)
+            }
+            
+            return tickers
         } catch {
             print(error.localizedDescription)
             return []

@@ -12,6 +12,7 @@
 		101906F028EBF1C900ACE558 /* trading_bot.py in Resources */ = {isa = PBXBuildFile; fileRef = 101906ED28EBF1C900ACE558 /* trading_bot.py */; };
 		101906F128EBF1C900ACE558 /* ETFs.csv in Resources */ = {isa = PBXBuildFile; fileRef = 101906EE28EBF1C900ACE558 /* ETFs.csv */; };
 		101906F228EBF1C900ACE558 /* stock_tickers.csv in Resources */ = {isa = PBXBuildFile; fileRef = 101906EF28EBF1C900ACE558 /* stock_tickers.csv */; };
+		10F0456F28ED23F7009F3277 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5420A28B11E910020223C /* HomeViewController.swift */; };
 		45F5420728B11E910020223C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5420628B11E910020223C /* AppDelegate.swift */; };
 		45F5420928B11E910020223C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5420828B11E910020223C /* SceneDelegate.swift */; };
 		45F5420B28B11E910020223C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5420A28B11E910020223C /* HomeViewController.swift */; };
@@ -319,6 +320,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45F5421E28B11E930020223C /* TradingBotTests.swift in Sources */,
+				10F0456F28ED23F7009F3277 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
