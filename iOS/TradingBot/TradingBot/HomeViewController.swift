@@ -11,6 +11,7 @@ import SnapKit
 import PythonKit
 
 class HomeViewController: UIViewController {
+    var stockTickers: [String] = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,18 +20,23 @@ class HomeViewController: UIViewController {
         print(getStockTickers())
     }
     
-    func getStockTickers() -> [[String]]? {
+    func getStockTickers() -> [String]? {
         do {
             let path = Bundle.main.path(forResource: "stock_tickers", ofType: "csv")!
             let data = try Data(contentsOf: URL(fileURLWithPath: path))
             let dataEncoded = String(data: data, encoding: .utf8)
             
-            let parsedCSV = dataEncoded?.components(separatedBy: "\n").map({
-                
+            
+            if let parsedCSV = dataEncoded?.components(separatedBy: "\n").map({
                 $0.components(separatedBy: ",")
-            })
-             
-            return parsedCSV ?? nil
+            }) {
+                for i in 0..<(parsedCSV.count - 1) {
+                    stockTickers.append(parsedCSV[i][1])
+                }
+                stockTickers.remove(at: 0)
+                return stockTickers
+            }
+            return stockTickers ?? nil
         } catch {
             print(error.localizedDescription)
             return []
