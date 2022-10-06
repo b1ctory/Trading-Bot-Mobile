@@ -13,6 +13,8 @@
 		101906F128EBF1C900ACE558 /* ETFs.csv in Resources */ = {isa = PBXBuildFile; fileRef = 101906EE28EBF1C900ACE558 /* ETFs.csv */; };
 		101906F228EBF1C900ACE558 /* stock_tickers.csv in Resources */ = {isa = PBXBuildFile; fileRef = 101906EF28EBF1C900ACE558 /* stock_tickers.csv */; };
 		10F0456F28ED23F7009F3277 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5420A28B11E910020223C /* HomeViewController.swift */; };
+		10F0457128EE6BD9009F3277 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0457028EE6BD9009F3277 /* Stock.swift */; };
+		10F0457428EE73FB009F3277 /* SwiftYFinance in Frameworks */ = {isa = PBXBuildFile; productRef = 10F0457328EE73FB009F3277 /* SwiftYFinance */; };
 		45F5420728B11E910020223C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5420628B11E910020223C /* AppDelegate.swift */; };
 		45F5420928B11E910020223C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5420828B11E910020223C /* SceneDelegate.swift */; };
 		45F5420B28B11E910020223C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5420A28B11E910020223C /* HomeViewController.swift */; };
@@ -57,6 +59,7 @@
 		101906ED28EBF1C900ACE558 /* trading_bot.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = trading_bot.py; sourceTree = "<group>"; };
 		101906EE28EBF1C900ACE558 /* ETFs.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ETFs.csv; sourceTree = "<group>"; };
 		101906EF28EBF1C900ACE558 /* stock_tickers.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stock_tickers.csv; sourceTree = "<group>"; };
+		10F0457028EE6BD9009F3277 /* Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		45F5420328B11E910020223C /* TradingBot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradingBot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45F5420628B11E910020223C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45F5420828B11E910020223C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +80,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				101906E828EBEFEF00ACE558 /* PythonKit in Frameworks */,
+				10F0457428EE73FB009F3277 /* SwiftYFinance in Frameworks */,
 				101906EB28EBF00300ACE558 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,6 +150,7 @@
 				45F5420F28B11E930020223C /* Assets.xcassets */,
 				45F5421128B11E930020223C /* LaunchScreen.storyboard */,
 				45F5421428B11E930020223C /* Info.plist */,
+				10F0457028EE6BD9009F3277 /* Stock.swift */,
 			);
 			path = TradingBot;
 			sourceTree = "<group>";
@@ -187,6 +192,7 @@
 			packageProductDependencies = (
 				101906E728EBEFEF00ACE558 /* PythonKit */,
 				101906EA28EBF00300ACE558 /* SnapKit */,
+				10F0457328EE73FB009F3277 /* SwiftYFinance */,
 			);
 			productName = TradingBot;
 			productReference = 45F5420328B11E910020223C /* TradingBot.app */;
@@ -263,6 +269,7 @@
 			packageReferences = (
 				101906E628EBEFEF00ACE558 /* XCRemoteSwiftPackageReference "PythonKit" */,
 				101906E928EBF00300ACE558 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				10F0457228EE73FB009F3277 /* XCRemoteSwiftPackageReference "SwiftYFinance" */,
 			);
 			productRefGroup = 45F5420428B11E910020223C /* Products */;
 			projectDirPath = "";
@@ -310,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45F5420B28B11E910020223C /* HomeViewController.swift in Sources */,
+				10F0457128EE6BD9009F3277 /* Stock.swift in Sources */,
 				45F5420728B11E910020223C /* AppDelegate.swift in Sources */,
 				45F5420928B11E910020223C /* SceneDelegate.swift in Sources */,
 			);
@@ -666,6 +674,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		10F0457228EE73FB009F3277 /* XCRemoteSwiftPackageReference "SwiftYFinance" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AlexRoar/SwiftYFinance";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -678,6 +694,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 101906E928EBF00300ACE558 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		10F0457328EE73FB009F3277 /* SwiftYFinance */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 10F0457228EE73FB009F3277 /* XCRemoteSwiftPackageReference "SwiftYFinance" */;
+			productName = SwiftYFinance;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
